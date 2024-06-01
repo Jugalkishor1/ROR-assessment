@@ -69,3 +69,5 @@ end
 gem "devise", "~> 4.9"
 gem "bootstrap"
 gem "sassc-rails"
+
+gem 'will_paginate', '~> 4.0'
