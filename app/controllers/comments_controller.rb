@@ -1,6 +1,5 @@
 class CommentsController < ApplicationController
   def create
-    debugger
     @post = Post.find(params[:post_id])
     @comment = @post.comments.build(comment_params)
     @comment.user = current_user
