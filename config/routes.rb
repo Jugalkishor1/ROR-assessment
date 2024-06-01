@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'news', to: 'news#index'
   resources :posts do
     resources :comments, only: [:new, :create]
   end
