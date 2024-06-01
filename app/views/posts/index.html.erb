@@ -8,10 +8,30 @@
     </div>
   </div>
 
+  <div class="mb-4">
+    <%= form_with(url: posts_path, method: :get, local: true, class: 'row g-3') do %>
+      <div class="col-auto">
+        <label for="search" class="form-label">Search:</label>
+        <%= text_field_tag :search, params[:search], class: 'form-control' %>
+      </div>
+      
+      <div class="col-auto">
+        <label for="sort_by" class="form-label">Sort by:</label>
+        <%= select_tag :sort_by, options_for_select([['Creation-time', 'Creation-time'], ['Title', 'title']], params[:sort_by]), include_blank: true, class: 'form-select' %>
+      </div>
+      
+      <div class="col-auto align-self-end">
+        <%= submit_tag 'Apply', class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+  </div>
+
   <% @posts.each do |post| %>
     <div class="card mb-4">
       <div class="card-body">
-        <h2 class="card-title">Title: <%= post.title %></h2>
+        <h2 class="card-title">Title: <%= post.title %>
+          <span class="small text-muted font-weight-normal"><%= post.created_at.strftime("%d/%m/%Y") %></span>
+        </h2>
         <p class="text-muted">Posted by: <%= post.user.email %></p>
         <p class="card-text"><%= truncate(post.body, length: 100) %></p>
 

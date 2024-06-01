@@ -3,7 +3,23 @@ class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy ]
 
   def index
-    @posts = Post.paginate(page: params[:page], per_page:2)
+    @posts = Post.all
+
+    if params[:search].present?
+      @posts = @posts.where("title ILIKE ? OR body ILIKE ?", "%#{params[:search]}%", "%#{params[:search]}%")
+    end
+
+    # Sorting
+    case params[:sort_by]
+    when 'title'
+      @posts = @posts.order(:title)
+    when 'date'
+      @posts = @posts.order(created_at: :desc)
+    else
+      @posts = @posts.order(:created_at) # default sort by created_at
+    end
+
+    @posts = @posts.paginate(page: params[:page], per_page: 10)
   end
 
   def show
