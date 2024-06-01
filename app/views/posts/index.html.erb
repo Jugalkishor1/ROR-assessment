@@ -1,29 +1,46 @@
-<h1>Posts</h1>
-
-<% @posts.each do |post| %>
-  <div class="post">
-    <h2><%= post.title %></h2>
-    <p><%= post.body %></p>
-    <p>Posted by: <%= post.user.email %></p>
-    <h3>Comments:</h3>
-    <ul>
-      <% post.comments.each do |comment| %>
-        <li>
-          <strong><%= comment.user.email %>:</strong> <%= comment.body %>
-        </li>
-      <% end %>
-    </ul>
-
-    <h3>Add a comment:</h3>
-    <%= form_with(model: [post, post.comments.build], local: true) do |form| %>
-      <div class="field">
-        <%= form.label :body %>
-        <%= form.text_area :body %>
-      </div>
-      <div class="actions">
-        <%= form.submit "Add Comment" %>
-      </div>
-    <% end %>
+<div class="container">
+  <div class="row my-4">
+    <div class="col-10">
+      <h1>Posts</h1>
+    </div>
+    <div class="col text-end">
+      <%= link_to "Add New post", new_post_path, class: "btn btn-primary" %>
+    </div>
   </div>
-  <hr>
-<% end %>
+
+  <% @posts.each do |post| %>
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title">Title: <%= post.title %></h2>
+        <p class="text-muted">Posted by: <%= post.user.email %></p>
+        <p class="card-text"><%= truncate(post.body, length: 100) %></p>
+
+        <%= link_to "Read More", post_path(post), class: "btn btn-primary" %>
+
+        <div class="comments mt-4">
+          <h3>Comments:</h3>
+          <ul class="list-group list-group-flush">
+            <% post.comments.each do |comment| %>
+              <li class="list-group-item">
+                <strong><%= comment.user.email %>:</strong> <%= comment.body %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+
+        <div class="add-comment mt-4">
+          <h3>Add a comment:</h3>
+          <%= form_with(model: [post, post.comments.build], local: true) do |form| %>
+            <div class="form-group">
+              <%= form.label :comment %>
+              <%= form.text_area :body, class: 'form-control', rows: 3 %>
+            </div>
+            <div class="form-group mt-2">
+              <%= form.submit "Add Comment", class: 'btn btn-primary' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

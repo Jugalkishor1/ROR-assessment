@@ -11,14 +11,9 @@
   </head>
 
   <body>
-    <div>
-      <% if user_signed_in? %>
-          Signed in as <%= current_user.email %>
-          <br>
-          <%= button_to "logout", destroy_user_session_path, method: :delete  %>
-      <% end %>
+    <div class="header">
+      <%= render partial: "shared/header" %>
     </div>
-
     <%= yield %>
   </body>
 </html>
