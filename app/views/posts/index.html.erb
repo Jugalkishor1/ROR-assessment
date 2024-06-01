@@ -37,6 +37,26 @@
 
         <%= link_to "Read More", post_path(post), class: "btn btn-primary" %>
 
+        <br>
+        <br>
+        
+        <span id=total-likes<%=post.id%>>
+          Likes:- <%= calculate_likes(post) %>
+        </span>
+
+        <% if is_post_already_liked?(post.id) %>
+          <div class="float-lg-center edit-button" id="unlike_button-<%= post.id %>">
+            <%= link_to "Unlike", unlike_post_path(post_id: post.id), remote: true, method: :patch , class: "link"%>
+          </div>
+
+        <% else %>
+          <div class="float-lg-center edit-button" id="like-<%= post.id %>">
+            <div class="like-button">
+              <%= link_to "Like", likes_path(post_id: post.id, 'user_id[]': current_user.id, current_user_id: current_user.id), remote: true, method: :post, class: "link"%>
+            </div>                     
+          </div>
+        <% end %>
+
         <div class="comments mt-4">
           <h3>Comments:</h3>
           <ul class="list-group list-group-flush">

@@ -1,9 +1,16 @@
 Rails.application.routes.draw do
   get 'news', to: 'news#index'
+  
   resources :posts do
     resources :comments, only: [:new, :create]
   end
+
+  put 'unlike_post', to: 'likes#unlike_post'
   
+  patch 'unlike_post', to: 'likes#unlike_post'
+
+  resources :likes, only: [:create]
+
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
