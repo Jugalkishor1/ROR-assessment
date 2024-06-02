@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'httparty'
 
 class NewsApiService
@@ -11,10 +13,10 @@ class NewsApiService
   def top_headlines(country: 'in', category: nil, pageSize: 20, page: 1)
     options = {
       query: {
-        country: country,
-        category: category,
-        pageSize: pageSize,
-        page: page,
+        country:,
+        category:,
+        pageSize:,
+        page:,
         apiKey: @api_key
       }
     }
@@ -24,10 +26,8 @@ class NewsApiService
   private
 
   def handle_response(response)
-    if response.success?
-      response.parsed_response
-    else
-      nil
-    end
+    return unless response.success?
+
+    response.parsed_response
   end
 end
