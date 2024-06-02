@@ -4,16 +4,11 @@ class LikesController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    @post = Like.find_by(post_id: params[:post_id])
-    if @post.present?
-      @already_liked = Like.where(post_id: params[:post_id]).where('user_id @> ?', "{#{current_user.id}}")
-      if @already_liked.empty?
-        @post.user_id.push(params[:current_user_id])
-        @post.save
-      end
-    else
-      debugger
-      @likes = Like.find_or_create_by(post_id: params[:post_id], user_id: params[:user_id])
+    @post = Like.find_or_initialize_by(post_id: params[:post_id])
+
+    unless @post.user_id.include?(current_user.id)
+      @post.user_id.push(current_user.id)
+      @post.save
     end
 
     respond_to do |format|

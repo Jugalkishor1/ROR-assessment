@@ -10,12 +10,12 @@ class NewsApiService
     @api_key = ENV['NEWS_API_KEY']
   end
 
-  def top_headlines(country: 'in', category: nil, pageSize: 20, page: 1)
+  def top_headlines(country: 'in', category: nil, page_size: 20, page: 1)
     options = {
       query: {
         country:,
         category:,
-        pageSize:,
+        page_size:,
         page:,
         apiKey: @api_key
       }

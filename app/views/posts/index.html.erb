@@ -44,7 +44,7 @@
           Likes:- <%= calculate_likes(post) %>
         </span>
 
-        <% if is_post_already_liked?(post.id) %>
+        <% if post_already_liked?(post.id) %>
           <div class="float-lg-center edit-button" id="unlike_button-<%= post.id %>">
             <%= link_to "Unlike", unlike_post_path(post_id: post.id), remote: true, method: :patch , class: "link"%>
           </div>
